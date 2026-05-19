@@ -1,0 +1,9 @@
+# Normalize line endings to LF in the repo; checkout as-is on all platforms
+* text=auto eol=lf
+
+# Treat binary files as binary
+*.png binary
+*.dll binary
+*.lib binary
+*.exe binary
+*.so  binary

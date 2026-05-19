@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "Movie Poster Studio (debug)",
+      "runtimeExecutable": "flutter",
+      "runtimeArgs": ["run", "-d", "windows"],
+      "port": null
+    },
+    {
+      "name": "Movie Poster Studio (release build)",
+      "runtimeExecutable": "flutter",
+      "runtimeArgs": ["build", "windows", "--release"],
+      "port": null
+    }
+  ]
+}
