@@ -195,3 +195,86 @@ RR_Export/
 **Set-swap says "no raw TMDB source".** The → NR / → Generic action needs the original file from `posters/<set>/<genre>/`. Re-scrape the movie to restore the raw source.
 
 **Posters outside my year range keep appearing.** The scraper doesn't delete existing files when you change the year filter — it just won't download new ones outside the window. Delete the genre folder manually before re-scraping if you want a clean slate.
+
+---
+
+## Building from source
+
+### Prerequisites
+
+| Tool | Version | Notes |
+|---|---|---|
+| [Flutter](https://docs.flutter.dev/get-started/install/windows/desktop) | 3.41 or later | Must have Windows desktop support enabled |
+| [Visual Studio 2022](https://visualstudio.microsoft.com/) | Any edition | Required workload: **Desktop development with C++** (includes CMake and the MSVC compiler) |
+
+Verify your Flutter setup is ready for Windows desktop:
+
+```
+flutter doctor
+```
+
+All entries should show a checkmark. The important ones are **Flutter**, **Windows Version**, and **Visual Studio**.
+
+---
+
+### 1. Clone the repository
+
+```
+git clone https://github.com/mikeydoom/movie-poster-studio.git
+cd movie-poster-studio
+```
+
+---
+
+### 2. Add the libvips runtime DLLs
+
+The 42 libvips DLLs are not included in the repo (they are ~23 MB of prebuilt binaries). You need to drop them in before building.
+
+1. Go to the [libvips Windows releases page](https://github.com/libvips/build-win64-mxe/releases) and download the **8.18.2** `vips-dev-w64-web` zip.
+2. Inside the zip, open the `bin/` folder.
+3. Copy **all files** from that `bin/` folder into:
+   ```
+   windows\poster_native\vendor\libvips\bin\
+   ```
+
+> **Note:** Without the DLLs the app still builds and runs — it automatically falls back to a pure-Dart image processor. The native path is significantly faster for large batches, so the DLLs are recommended.
+
+---
+
+### 3. Get Flutter packages
+
+```
+flutter pub get
+```
+
+---
+
+### 4. Build
+
+```
+flutter build windows --release
+```
+
+The build takes about 40 seconds. Output lands at:
+
+```
+build\windows\x64\runner\Release\
+```
+
+---
+
+### 5. Run
+
+Double-click `movie_poster_studio.exe` inside the `Release\` folder, or launch it from the command line:
+
+```
+build\windows\x64\runner\Release\movie_poster_studio.exe
+```
+
+The app is fully portable — you can copy the entire `Release\` folder anywhere (another drive, a USB stick, a different machine) and it will work. All posters, config, and exports are stored relative to the exe.
+
+---
+
+### Overlay images
+
+The repo includes default overlay images in `overlays/`. The build process copies them next to the exe automatically. If you want custom overlays, replace the PNGs in `overlays/generic/` and `overlays/new_releases/` before building, or drop replacement files next to the exe after building.
