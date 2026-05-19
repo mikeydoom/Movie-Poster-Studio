@@ -46,3 +46,7 @@ app.*.map.json
 
 # libvips runtime DLLs (large binaries; obtain from https://github.com/libvips/build-win64-mxe/releases)
 windows/poster_native/vendor/libvips/bin/
+
+# AI agent instruction files
+CLAUDE.md
+AGENTS.md
