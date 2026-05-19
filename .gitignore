@@ -50,3 +50,6 @@ windows/poster_native/vendor/libvips/bin/
 # AI agent instruction files
 CLAUDE.md
 AGENTS.md
+
+# Third-party reference tool (not part of this project's source)
+RR_VHS_Tool_18_Genres.py
